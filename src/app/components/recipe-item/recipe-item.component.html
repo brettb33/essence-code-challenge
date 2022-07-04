@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-2 ms-3 mt-2" style="display: inline-block">
+          <a
+            style="cursor: pointer; color: #0d6efd; text-decoration: underline"
+            (click)="returnToResults()"
+            >Back to results</a
+          >
+        </div>
+        <div class="col" style="display: inline-block">
+          <h1 class="mb-3">{{ recipe?.title }}</h1>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col">
+            <div class="row">
+              <div class="col-md-2">
+                <img
+                  src="{{ recipe?.image }}"
+                  class="img-responsive"
+                  style="max-width: 200px"
+                />
+              </div>
+              <div class="col-md">
+                <p [innerHTML]="recipe?.summary"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row mt-3">
+          <div class="col">
+            <img
+              src="{{ nutritionImagePath }}"
+              class="img-responsive"
+              style="max-height: 800px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

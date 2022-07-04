@@ -1,0 +1,157 @@
+<div class="container">
+  <div class="row mt-4" style="text-align: center">
+    <h1>Recipe Finder</h1>
+  </div>
+  <div class="card mt-4 border-0">
+    <div class="card-body">
+      <div *ngIf="form" class="container mb-4">
+        <form [formGroup]="form">
+          <div class="row mt-5">
+            <div class="col-md-auto">
+              <label class="col-form-label"><b>Search:</b> </label>
+            </div>
+            <div class="col-md-4">
+              <input
+                type="'text"
+                class="form-control"
+                [ngClass]="
+                  searchTextCtrl?.hasError('pattern') ? 'is-invalid' : ''
+                "
+                formControlName="searchText"
+                testId="search-text-input"
+              />
+              <div class="invalid-feedback">
+                Search can only contain letters
+              </div>
+            </div>
+            <div class="col-md-auto">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="searchRecipes(0)"
+                [disabled]="!form.valid"
+                testid="search-button"
+              >
+                Search
+              </button>
+            </div>
+            <div class="col-md-auto ms-5">
+              <label class="col-form-label"><b>Meal Type:</b> </label>
+            </div>
+            <div class="col-md-2">
+              <select
+                class="form-select"
+                formControlName="mealType"
+                aria-label="Select meal type"
+                testId="meal-type-select"
+              >
+                <option value="null">Any</option>
+                <option *ngFor="let type of recipeSvc.mealTypes" [value]="type">
+                  {{ type | titlecase }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="recipeSvc.totalPages > 0" class="container">
+        <div class="fw-light col-md-9" style="display: inline-block">
+          Displaying page {{ recipeSvc.pageNumber + 1 }} of
+          {{ recipeSvc.totalPages }}
+        </div>
+        <div class="col" style="display: inline-block">
+          <nav aria-label="Recipe search page navigation">
+            <ul class="pagination justify-content-end">
+              <li
+                class="page-item"
+                [ngClass]="recipeSvc.pageNumber === 0 ? 'disabled' : ''"
+              >
+                <a
+                  class="page-link"
+                  style="cursor: pointer"
+                  (click)="searchRecipes(0)"
+                  >First</a
+                >
+              </li>
+              <li
+                class="page-item"
+                [ngClass]="recipeSvc.pageNumber === 0 ? 'disabled' : ''"
+              >
+                <a
+                  class="page-link"
+                  style="cursor: pointer"
+                  (click)="searchRecipes(recipeSvc.pageNumber - 1)"
+                  >Previous</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  [ngClass]="
+                    recipeSvc.pageNumber + 1 > recipeSvc.totalPages
+                      ? 'disabled'
+                      : ''
+                  "
+                  style="cursor: pointer"
+                  (click)="searchRecipes(recipeSvc.pageNumber + 1)"
+                  >Next</a
+                >
+              </li>
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  [ngClass]="
+                    recipeSvc.pageNumber + 3 > recipeSvc.totalPages
+                      ? 'disabled'
+                      : ''
+                  "
+                  style="cursor: pointer"
+                  (click)="searchRecipes(recipeSvc.totalPages - 1)"
+                  >Last</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <table
+        *ngIf="recipeSvc.totalPages > 0"
+        class="table table-light table-striped"
+      >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Health Score</th>
+            <th scope="col">Ready In Minutes</th>
+            <th scope="col">Servings</th>
+            <th scope="col">Vegetarian</th>
+            <th scope="col" class="text-right">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recipe of recipeSvc.recipeList; let i = index">
+            <th scope="row">{{ i + 1 + recipeSvc.offset }}</th>
+            <td>{{ recipe.title }}</td>
+            <td>{{ recipe.healthScore }}</td>
+            <td>{{ recipe.readyInMinutes }}</td>
+            <td>{{ recipe.servings }}</td>
+            <td>{{ recipe.vegetarian }}</td>
+            <td class="text-right">
+              <a
+                style="
+                  cursor: pointer;
+                  color: #0d6efd;
+                  text-decoration: underline;
+                "
+                (click)="viewRecipe(recipe.id)"
+                >View</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
