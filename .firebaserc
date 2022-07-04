@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "essence-code-challenge": {
+      "hosting": {
+        "essence-coding-challenge": [
+          "essence-code-challenge"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "essence-code-challenge"
+  }
+}

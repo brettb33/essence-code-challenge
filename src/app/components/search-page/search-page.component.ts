@@ -11,6 +11,7 @@ import { SearchCriteria } from 'src/app/model/search-criteria';
 import { SortCriteria } from 'src/app/model/sort-criteria';
 import { SortDirection } from 'src/app/model/sort-direction';
 import { SortType } from 'src/app/model/sort-type';
+import { AuthService } from 'src/app/services/auth.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 
 /**
@@ -39,7 +40,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   constructor(
     public recipeSvc: RecipeService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authSvc: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -127,5 +129,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   viewRecipe(id: string) {
     this.router.navigate(['view', id]);
+  }
+
+  logOut() {
+    this.authSvc.logout();
+    //TODO: this won't refresh the page to present user with google sign-in pop-up
+    this.router.navigate(['list']);
   }
 }
