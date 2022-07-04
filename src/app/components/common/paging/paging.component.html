@@ -25,23 +25,27 @@
             >Previous</a
           >
         </li>
-        <li class="page-item">
+        <li
+          class="page-item"
+          [ngClass]="
+            recipeSvc.pageNumber + 1 === recipeSvc.totalPages ? 'disabled' : ''
+          "
+        >
           <a
             class="page-link"
-            [ngClass]="
-              recipeSvc.pageNumber + 1 > recipeSvc.totalPages ? 'disabled' : ''
-            "
             style="cursor: pointer"
             (click)="search(recipeSvc.pageNumber + 1)"
             >Next</a
           >
         </li>
-        <li class="page-item">
+        <li
+          class="page-item"
+          [ngClass]="
+            recipeSvc.pageNumber + 1 === recipeSvc.totalPages ? 'disabled' : ''
+          "
+        >
           <a
             class="page-link"
-            [ngClass]="
-              recipeSvc.pageNumber + 3 > recipeSvc.totalPages ? 'disabled' : ''
-            "
             style="cursor: pointer"
             (click)="search(recipeSvc.totalPages - 1)"
             >Last</a

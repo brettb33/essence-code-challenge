@@ -52,7 +52,7 @@ export class RecipeService {
 
   // paging info
   readonly pageSize: number = 10;
-  totalResults: number = 0;
+  private totalResults: number = 0;
   pageNumber: number = 0;
   offset: number = 0;
   totalPages: number = 0;
