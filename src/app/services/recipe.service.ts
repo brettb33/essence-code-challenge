@@ -9,6 +9,8 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { RecipeItemDetail } from '../model/recipe-item-detail';
 import { RecipeListItem } from '../model/recipe-list-item';
 import { RecipeListResponseType } from '../model/recipe-list-response-type';
+import { SearchCriteria } from '../model/search-criteria';
+import { SortCriteria } from '../model/sort-criteria';
 
 /**
  * Service to interact with the Spoonacular public API
@@ -22,12 +24,11 @@ import { RecipeListResponseType } from '../model/recipe-list-response-type';
 })
 export class RecipeService {
   private readonly url: string = 'https://api.spoonacular.com/recipes';
-  private readonly token = '66f014cb70f940b8ac05ea32a4ffa8cb';
+  private readonly apiKey = '66f014cb70f940b8ac05ea32a4ffa8cb';
 
   // URL paths for a particular search call
   private readonly complexSearchPath = '/complexSearch';
   private readonly infoPath = '/information';
-  private readonly nutritionPath = '/nutritionWidget';
 
   // meal types used to filter search
   readonly mealTypes: Array<string> = [
@@ -39,6 +40,16 @@ export class RecipeService {
     'snack',
   ];
 
+  // parameter constants
+  readonly paramQuery = 'query';
+  readonly paramApiKey = 'apiKey';
+  readonly paramPageSize = 'number';
+  readonly paramOffset = 'offset';
+  readonly paramAddRecipeInfo = 'addRecipeInformation';
+  readonly paramMealType = 'type';
+  readonly paramSortOn = 'sort';
+  readonly paramSortDir = 'sortDirection';
+
   // paging info
   readonly pageSize: number = 10;
   totalResults: number = 0;
@@ -46,12 +57,11 @@ export class RecipeService {
   offset: number = 0;
   totalPages: number = 0;
 
-  // html content type for the nutrition widget
-  private htmlContentTypeHeader = {
-    headers: new HttpHeaders({
-      responseType: 'text',
-    }),
-  };
+  // search criteria
+  searchCriteria: SearchCriteria | undefined;
+
+  // sort criteria
+  private sortCriteria: SortCriteria | undefined;
 
   private _searchResults: Array<RecipeListItem> = [];
 
@@ -62,7 +72,7 @@ export class RecipeService {
   }
 
   /**
-   *Performs a complex search for recipes
+   * Performs a complex search for recipes
    * @param pageNo the page number required
    * @param query the search query text
    * @param mealType the meal type filter
@@ -71,27 +81,16 @@ export class RecipeService {
    */
   searchRecipes(
     pageNo: number,
-    query: string,
-    mealType?: string
+    searchCriteria: SearchCriteria,
+    sortCriteria?: SortCriteria
   ): Observable<RecipeListResponseType> {
     this.pageNumber = pageNo;
-
-    // set the search parameters as HttpParams
-    let params = new HttpParams();
-    params = params.set('query', query);
-    params = params.set('apiKey', this.token);
-    params = params.set('number', this.pageSize);
-    params = params.set('offset', this.pageNumber * this.pageSize);
-    params = params.set('addRecipeInformation', true);
-
-    // add the meal type filter if set
-    if (mealType) {
-      params = params.set('type', mealType);
-    }
+    this.searchCriteria = searchCriteria;
+    this.sortCriteria = sortCriteria;
 
     return this.httpClient
       .get<RecipeListResponseType>(this.url + this.complexSearchPath, {
-        params: params,
+        params: this.getSearchParams(),
       })
       .pipe(
         map((response: RecipeListResponseType) => {
@@ -106,6 +105,35 @@ export class RecipeService {
   }
 
   /**
+   * Gets {@link HttpParams} from searching,
+   * sorting and paging information
+   * @returns {@link HttpParams} to search with
+   */
+  private getSearchParams(): HttpParams {
+    let params = new HttpParams();
+
+    if (this.searchCriteria) {
+      params = params.set(this.paramQuery, this.searchCriteria.searchText);
+      params = params.set(this.paramApiKey, this.apiKey);
+      params = params.set(this.paramPageSize, this.pageSize);
+      params = params.set(this.paramOffset, this.pageNumber * this.pageSize);
+      params = params.set(this.paramAddRecipeInfo, true);
+
+      // add the meal type filter if set
+      if (this.searchCriteria.mealType) {
+        params = params.set(this.paramMealType, this.searchCriteria.mealType);
+      }
+
+      // add sorting if set
+      if (this.sortCriteria) {
+        params = params.set(this.paramSortOn, this.sortCriteria.sortOn);
+        params = params.set(this.paramSortDir, this.sortCriteria.sortDirection);
+      }
+    }
+    return params;
+  }
+
+  /**
    * Gets specific recipe information
    * @param recipeId the Id of the recipe
    * @returns an {@link Observable} containing the
@@ -114,7 +142,7 @@ export class RecipeService {
   getRecipe(recipeId: string): Observable<RecipeItemDetail> {
     let params = new HttpParams();
     params = params.set('includeNutrition', false);
-    params = params.set('apiKey', this.token);
+    params = params.set('apiKey', this.apiKey);
     return this.httpClient
       .get<RecipeItemDetail>(this.url + '/' + recipeId + this.infoPath, {
         params: params,

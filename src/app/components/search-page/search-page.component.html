@@ -54,66 +54,8 @@
           </div>
         </form>
       </div>
-      <div *ngIf="recipeSvc.totalPages > 0" class="container">
-        <div class="fw-light col-md-9" style="display: inline-block">
-          Displaying page {{ recipeSvc.pageNumber + 1 }} of
-          {{ recipeSvc.totalPages }}
-        </div>
-        <div class="col" style="display: inline-block">
-          <nav aria-label="Recipe search page navigation">
-            <ul class="pagination justify-content-end">
-              <li
-                class="page-item"
-                [ngClass]="recipeSvc.pageNumber === 0 ? 'disabled' : ''"
-              >
-                <a
-                  class="page-link"
-                  style="cursor: pointer"
-                  (click)="searchRecipes(0)"
-                  >First</a
-                >
-              </li>
-              <li
-                class="page-item"
-                [ngClass]="recipeSvc.pageNumber === 0 ? 'disabled' : ''"
-              >
-                <a
-                  class="page-link"
-                  style="cursor: pointer"
-                  (click)="searchRecipes(recipeSvc.pageNumber - 1)"
-                  >Previous</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  [ngClass]="
-                    recipeSvc.pageNumber + 1 > recipeSvc.totalPages
-                      ? 'disabled'
-                      : ''
-                  "
-                  style="cursor: pointer"
-                  (click)="searchRecipes(recipeSvc.pageNumber + 1)"
-                  >Next</a
-                >
-              </li>
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  [ngClass]="
-                    recipeSvc.pageNumber + 3 > recipeSvc.totalPages
-                      ? 'disabled'
-                      : ''
-                  "
-                  style="cursor: pointer"
-                  (click)="searchRecipes(recipeSvc.totalPages - 1)"
-                  >Last</a
-                >
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+
+      <app-paging (parentSearch)="searchRecipes($event)"></app-paging>
 
       <table
         *ngIf="recipeSvc.totalPages > 0"
@@ -123,7 +65,13 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">Health Score</th>
+            <th scope="col">
+              <a
+                style="cursor: pointer; text-decoration: underline"
+                (click)="sortOn(sortType.HEALTH_SCORE)"
+                >Health Score</a
+              >
+            </th>
             <th scope="col">Ready In Minutes</th>
             <th scope="col">Servings</th>
             <th scope="col">Vegetarian</th>

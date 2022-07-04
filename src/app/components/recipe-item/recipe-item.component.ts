@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RecipeItemDetail } from 'src/app/model/recipe-item-detail';
+import { SearchCriteria } from 'src/app/model/search-criteria';
 import { RecipeService } from 'src/app/services/recipe.service';
 
 /**
@@ -18,6 +19,7 @@ export class RecipeItemComponent implements OnInit {
   private subscriptions: Array<Subscription> = [];
   recipe: RecipeItemDetail | undefined;
   nutritionImagePath: string | undefined;
+  private searchCriteria: SearchCriteria | undefined;
 
   constructor(
     private route: ActivatedRoute,

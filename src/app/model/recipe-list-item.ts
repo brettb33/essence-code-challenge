@@ -1,5 +1,5 @@
 /**
- * An item from a Recipe List
+ * A recipe item from a Recipe List search
  */
 export interface RecipeListItem {
   id: string;
