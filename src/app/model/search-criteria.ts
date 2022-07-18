@@ -2,5 +2,9 @@
  * Class to hold search settings
  */
 export class SearchCriteria {
-  constructor(public searchText: string, public mealType?: string) {}
+  constructor(
+    public searchText: string,
+    public mealType?: string,
+    public dietType?: string
+  ) {}
 }

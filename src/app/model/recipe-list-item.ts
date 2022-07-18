@@ -6,6 +6,6 @@ export interface RecipeListItem {
   title: string;
   readyInMinutes: number;
   servings: number;
-  vegetarian: boolean;
+  lowFodmap: boolean;
   healthScore: number;
 }

@@ -17,12 +17,14 @@
         <form [formGroup]="form">
           <div class="row mt-5">
             <div class="col-md-auto">
-              <label class="col-form-label"><b>Search:</b> </label>
+              <label class="col-form-label col-form-label-sm"
+                ><b>Search:</b>
+              </label>
             </div>
             <div class="col-md-4">
               <input
                 type="'text"
-                class="form-control"
+                class="form-control form-control-sm"
                 [ngClass]="
                   searchTextCtrl?.hasError('pattern') ? 'is-invalid' : ''
                 "
@@ -36,7 +38,7 @@
             <div class="col-md-auto">
               <button
                 type="button"
-                class="btn btn-primary"
+                class="btn btn-primary btn-sm"
                 (click)="searchRecipes(0)"
                 [disabled]="!form.valid"
                 testid="search-button"
@@ -44,12 +46,32 @@
                 Search
               </button>
             </div>
-            <div class="col-md-auto ms-5">
-              <label class="col-form-label"><b>Meal Type:</b> </label>
+            <div class="col-md-auto ms-4">
+              <label class="col-form-label col-form-label-sm"
+                ><b>Diet:</b>
+              </label>
             </div>
             <div class="col-md-2">
               <select
-                class="form-select"
+                class="form-select form-select-sm"
+                formControlName="dietType"
+                aria-label="Select diet type"
+                testId="diet-type-select"
+              >
+                <option value="null">Any</option>
+                <option *ngFor="let type of recipeSvc.dietTypes" [value]="type">
+                  {{ type | titlecase }}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-auto ms-4">
+              <label class="col-form-label col-form-label-sm"
+                ><b>Meal:</b>
+              </label>
+            </div>
+            <div class="col-md-2">
+              <select
+                class="form-select form-select-sm"
                 formControlName="mealType"
                 aria-label="Select meal type"
                 testId="meal-type-select"
@@ -75,26 +97,27 @@
       </div>
 
       <ng-container *ngIf="!loading">
-        <app-paging (parentSearch)="searchRecipes($event)"></app-paging>
+        <div class="container">
+          <div class="row mt-5">
+            <app-paging (parentSearch)="searchRecipes($event)"></app-paging>
+          </div>
+        </div>
 
-        <table
-          *ngIf="recipeSvc.totalPages > 0"
-          class="table table-light table-striped"
-        >
+        <table class="table table-light table-striped table-sm">
           <thead>
-            <tr>
+            <tr style="font-size: 15px">
               <th scope="col">#</th>
-              <th scope="col">Title</th>
-              <th scope="col">
+              <th scope="col" style="width: 45%">Title</th>
+              <th scope="col" class="text-center">
                 <a
                   style="cursor: pointer; text-decoration: underline"
                   (click)="sortOn(sortType.HEALTH_SCORE)"
-                  >Health Score</a
+                  >Health Score (%)</a
                 >
               </th>
-              <th scope="col">Ready In Minutes</th>
-              <th scope="col">Servings</th>
-              <th scope="col">Vegetarian</th>
+              <th scope="col" class="text-center">Ready In Minutes</th>
+              <th scope="col" class="text-center">Servings</th>
+              <th scope="col" class="text-center">Low FODMAP</th>
               <th scope="col" class="text-right">&nbsp;</th>
             </tr>
           </thead>
@@ -102,10 +125,10 @@
             <tr *ngFor="let recipe of recipeSvc.recipeList; let i = index">
               <th scope="row">{{ i + 1 + recipeSvc.offset }}</th>
               <td>{{ recipe.title }}</td>
-              <td>{{ recipe.healthScore }}</td>
-              <td>{{ recipe.readyInMinutes }}</td>
-              <td>{{ recipe.servings }}</td>
-              <td>{{ recipe.vegetarian }}</td>
+              <td class="text-center">{{ recipe.healthScore }}</td>
+              <td class="text-center">{{ recipe.readyInMinutes }}</td>
+              <td class="text-center">{{ recipe.servings }}</td>
+              <td class="text-center">{{ recipe.lowFodmap ? "Yes" : "No" }}</td>
               <td class="text-right">
                 <a
                   style="
@@ -117,6 +140,9 @@
                   >View</a
                 >
               </td>
+            </tr>
+            <tr *ngIf="recipeSvc.recipeList.length === 0">
+              <td class="text-center" colspan="7">No results to display</td>
             </tr>
           </tbody>
         </table>

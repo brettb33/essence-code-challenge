@@ -40,6 +40,15 @@ export class RecipeService {
     'snack',
   ];
 
+  readonly dietTypes: Array<string> = [
+    'Gluten Free',
+    'Vegetarian',
+    'Ketogenic',
+    'Vegan',
+    'Paleo',
+    'Pescetarian',
+  ];
+
   // parameter constants
   readonly paramQuery = 'query';
   readonly paramApiKey = 'apiKey';
@@ -47,11 +56,12 @@ export class RecipeService {
   readonly paramOffset = 'offset';
   readonly paramAddRecipeInfo = 'addRecipeInformation';
   readonly paramMealType = 'type';
+  readonly paramDietType = 'diet';
   readonly paramSortOn = 'sort';
   readonly paramSortDir = 'sortDirection';
 
   // paging info
-  readonly pageSize: number = 10;
+  readonly pageSize: number = 15;
   private totalResults: number = 0;
   pageNumber: number = 0;
   offset: number = 0;
@@ -136,6 +146,12 @@ export class RecipeService {
       if (this.searchCriteria.mealType) {
         params = params.set(this.paramMealType, this.searchCriteria.mealType);
       }
+
+      // add the diet type filter (if its not set, set it to null as this seems to correct the API searching!!)
+      params = params.set(
+        this.paramDietType,
+        this.searchCriteria.dietType ?? 'null'
+      );
 
       // add sorting if set
       if (this.sortCriteria) {

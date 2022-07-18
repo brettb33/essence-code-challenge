@@ -33,6 +33,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   form: FormGroup | undefined;
   searchTextCtrl: FormControl | undefined;
   mealTypeCtrl: FormControl | undefined;
+  dietTypeCtrl: FormControl | undefined;
 
   // sorting
   sortType = SortType;
@@ -67,9 +68,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       Validators.pattern('[a-zA-Z- ]+'),
     ]);
     this.mealTypeCtrl = this.fb.control(null);
+    this.dietTypeCtrl = this.fb.control(null);
     this.form = this.fb.group({
       searchText: this.searchTextCtrl,
       mealType: this.mealTypeCtrl,
+      dietType: this.dietTypeCtrl,
     });
   }
 
@@ -116,7 +119,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     const formVal = this.form?.value;
     const searchCriteria = new SearchCriteria(
       formVal.searchText,
-      formVal.mealType
+      formVal.mealType,
+      formVal.dietType
     );
     this.subscriptions.push(
       this.recipeSvc
