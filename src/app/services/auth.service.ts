@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
 import { User } from '../model/user';
 
@@ -9,6 +10,8 @@ import { User } from '../model/user';
   providedIn: 'root',
 })
 export class AuthService {
+  constructor(private router: Router) {}
+
   loginWithGoogle() {
     const provider = new GoogleAuthProvider();
 
@@ -27,6 +30,8 @@ export class AuthService {
         if (token) {
           localStorage.setItem('user', JSON.stringify(user));
         }
+        // redirect to the search page
+        this.router.navigate(['list']);
       })
       .catch((error) => {
         // Handle Errors here.

@@ -1,6 +1,13 @@
 <div class="container">
   <div class="row mt-4" style="text-align: center">
-    <div style="display: inline-block">
+    <div class="col-1 mt-3" style="display: inline-block">
+      <a
+        style="cursor: pointer; color: #0d6efd; text-decoration: underline"
+        (click)="logout()"
+        >Logout</a
+      >
+    </div>
+    <div class="col-10" style="display: inline-block">
       <h1>Healthy Recipes Finder</h1>
     </div>
   </div>
@@ -57,51 +64,63 @@
         </form>
       </div>
 
-      <app-paging (parentSearch)="searchRecipes($event)"></app-paging>
+      <div *ngIf="loading" class="d-flex justify-content-center">
+        <div
+          class="spinner-border float"
+          style="width: 3rem; height: 3rem"
+          role="status"
+        >
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
 
-      <table
-        *ngIf="recipeSvc.totalPages > 0"
-        class="table table-light table-striped"
-      >
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">
-              <a
-                style="cursor: pointer; text-decoration: underline"
-                (click)="sortOn(sortType.HEALTH_SCORE)"
-                >Health Score</a
-              >
-            </th>
-            <th scope="col">Ready In Minutes</th>
-            <th scope="col">Servings</th>
-            <th scope="col">Vegetarian</th>
-            <th scope="col" class="text-right">&nbsp;</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let recipe of recipeSvc.recipeList; let i = index">
-            <th scope="row">{{ i + 1 + recipeSvc.offset }}</th>
-            <td>{{ recipe.title }}</td>
-            <td>{{ recipe.healthScore }}</td>
-            <td>{{ recipe.readyInMinutes }}</td>
-            <td>{{ recipe.servings }}</td>
-            <td>{{ recipe.vegetarian }}</td>
-            <td class="text-right">
-              <a
-                style="
-                  cursor: pointer;
-                  color: #0d6efd;
-                  text-decoration: underline;
-                "
-                (click)="viewRecipe(recipe.id)"
-                >View</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <ng-container *ngIf="!loading">
+        <app-paging (parentSearch)="searchRecipes($event)"></app-paging>
+
+        <table
+          *ngIf="recipeSvc.totalPages > 0"
+          class="table table-light table-striped"
+        >
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">
+                <a
+                  style="cursor: pointer; text-decoration: underline"
+                  (click)="sortOn(sortType.HEALTH_SCORE)"
+                  >Health Score</a
+                >
+              </th>
+              <th scope="col">Ready In Minutes</th>
+              <th scope="col">Servings</th>
+              <th scope="col">Vegetarian</th>
+              <th scope="col" class="text-right">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let recipe of recipeSvc.recipeList; let i = index">
+              <th scope="row">{{ i + 1 + recipeSvc.offset }}</th>
+              <td>{{ recipe.title }}</td>
+              <td>{{ recipe.healthScore }}</td>
+              <td>{{ recipe.readyInMinutes }}</td>
+              <td>{{ recipe.servings }}</td>
+              <td>{{ recipe.vegetarian }}</td>
+              <td class="text-right">
+                <a
+                  style="
+                    cursor: pointer;
+                    color: #0d6efd;
+                    text-decoration: underline;
+                  "
+                  (click)="viewRecipe(recipe.id)"
+                  >View</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
     </div>
   </div>
 </div>

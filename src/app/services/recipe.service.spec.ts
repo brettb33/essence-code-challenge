@@ -5,6 +5,7 @@ import {
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RecipeItemDetail } from '../model/recipe-item-detail';
+import { SearchCriteria } from '../model/search-criteria';
 import { RecipeListResponseType } from '../model/recipe-list-response-type';
 
 import { RecipeService } from './recipe.service';
@@ -77,7 +78,7 @@ describe('RecipeService', () => {
 
   it('gets a list of recipes', () => {
     let actualRecipeListResponse!: RecipeListResponseType;
-    service.searchRecipes(0, '').subscribe((response) => {
+    service.searchRecipes(0, new SearchCriteria('')).subscribe((response) => {
       actualRecipeListResponse = response;
     });
 
@@ -88,10 +89,10 @@ describe('RecipeService', () => {
     expect(actualRecipeListResponse).toEqual(mockRecipeListResponse);
   });
 
-  it('passes through erors when searching recipes', () => {
+  it('passes through errors when searching recipes', () => {
     const mockError = new ProgressEvent('API error');
 
-    service.searchRecipes(0, '').subscribe({
+    service.searchRecipes(0, new SearchCriteria('')).subscribe({
       next: () => {
         fail('next handler must not be called');
       },

@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { RecipeListResponseType } from 'src/app/model/recipe-list-response-type';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { SearchCriteria } from 'src/app/model/search-criteria';
 
 const mockRecipeListResponse: RecipeListResponseType = {
   offset: 10,
@@ -86,9 +87,11 @@ describe('SearchPageComponent', () => {
   it('should retrieve a list of recipes through the Recipe Service', () => {
     component.searchRecipes(0);
     expect(mockRecipeSvc.searchRecipes).toHaveBeenCalled();
-    mockRecipeSvc.searchRecipes(0, '').subscribe((response) => {
-      expect(response).toEqual(mockRecipeListResponse);
-    });
+    mockRecipeSvc
+      .searchRecipes(0, new SearchCriteria('test'))
+      .subscribe((response) => {
+        expect(response).toEqual(mockRecipeListResponse);
+      });
   });
 
   it('should call searchRecipes when the search Button is clicked', () => {

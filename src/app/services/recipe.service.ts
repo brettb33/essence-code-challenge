@@ -72,6 +72,19 @@ export class RecipeService {
   }
 
   /**
+   * Clears the recipe list information
+   * e.g. when we logout
+   */
+  clearRecipeList() {
+    this._searchResults = [];
+    this.totalResults = 0;
+    this.offset = 0;
+    this.totalPages = 0;
+    this.searchCriteria = undefined;
+    this.sortCriteria = undefined;
+  }
+
+  /**
    * Performs a complex search for recipes
    * @param pageNo the page number required
    * @param query the search query text

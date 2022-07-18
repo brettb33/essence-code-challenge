@@ -7,6 +7,7 @@ import { SearchPageComponent } from './components/search-page/search-page.compon
 import { RecipeItemComponent } from './components/recipe-item/recipe-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PagingComponent } from './components/common/paging/paging.component';
+import { AuthComponent } from './components/auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { PagingComponent } from './components/common/paging/paging.component';
     SearchPageComponent,
     RecipeItemComponent,
     PagingComponent,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

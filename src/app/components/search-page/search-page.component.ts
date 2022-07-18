@@ -27,6 +27,7 @@ import { RecipeService } from 'src/app/services/recipe.service';
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
   private subscriptions: Array<Subscription> = [];
+  loading: boolean = false;
 
   // form info
   form: FormGroup | undefined;
@@ -111,6 +112,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
    * @param page the page number required
    */
   searchRecipes(page: number) {
+    this.loading = true;
     const formVal = this.form?.value;
     const searchCriteria = new SearchCriteria(
       formVal.searchText,
@@ -120,7 +122,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       this.recipeSvc
         .searchRecipes(page, searchCriteria, this.sortCriteria)
         .subscribe({
+          next: () => (this.loading = false),
           error: () => {
+            this.loading = false;
             console.error('Failed to load recipes!', false);
           },
         })
@@ -131,9 +135,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['view', id]);
   }
 
-  logOut() {
+  logout() {
+    this.recipeSvc.clearRecipeList();
     this.authSvc.logout();
-    //TODO: this won't refresh the page to present user with google sign-in pop-up
-    this.router.navigate(['list']);
+    this.router.navigate(['auth']);
   }
 }

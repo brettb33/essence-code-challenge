@@ -13,7 +13,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // initialise firebase for user authentication
-    //initializeApp(environment.firebase);
-    //this.authSvc.loginWithGoogle();
+    initializeApp(environment.firebase);
   }
 }
