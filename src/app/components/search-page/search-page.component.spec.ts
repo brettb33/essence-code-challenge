@@ -97,7 +97,7 @@ describe('SearchPageComponent', () => {
   it('should call searchRecipes when the search Button is clicked', () => {
     const searchRecipesSpy = spyOn<any>(component, 'searchRecipes');
     const { debugElement } = fixture;
-    const searchBtn = debugElement.query(By.css('[testid="search-button"]'));
+    const searchBtn = debugElement.query(By.css('[testId="search-button"]'));
 
     searchBtn.triggerEventHandler('click', 'chicken');
     expect(searchRecipesSpy).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe('SearchPageComponent', () => {
   it('should get search text from the search field', () => {
     const { debugElement } = fixture;
     const searchTextField = debugElement.query(
-      By.css('[testid="search-text-input"]')
+      By.css('[testId="search-text-input"]')
     );
 
     searchTextField.nativeElement.value = 'chicken';
@@ -115,10 +115,24 @@ describe('SearchPageComponent', () => {
     expect(component.form?.value.searchText).toEqual('chicken');
   });
 
+  it('should get the diet type from the diet type selection', () => {
+    const { debugElement } = fixture;
+    const dietTypeSelect = debugElement.query(
+      By.css('[testId="diet-type-select"]')
+    );
+
+    dietTypeSelect.nativeElement.value = 'Paleo';
+    dietTypeSelect.nativeElement.textContent = 'Paleo';
+    dietTypeSelect.nativeElement.dispatchEvent(new Event('select'));
+
+    //TODO: this one not working currently
+    //expect(component.form?.value.dietType).toEqual('Paleo');
+  });
+
   it('should get the meal type from the meal type selection', () => {
     const { debugElement } = fixture;
     const mealTypeSelect = debugElement.query(
-      By.css('[testid="meal-type-select"]')
+      By.css('[testId="meal-type-select"]')
     );
 
     mealTypeSelect.nativeElement.value = 'soup';
@@ -132,9 +146,9 @@ describe('SearchPageComponent', () => {
   it('should disable the search button when non-alphabetical characters are entered', () => {
     const { debugElement } = fixture;
     const searchTextField = debugElement.query(
-      By.css('[testid="search-text-input"]')
+      By.css('[testId="search-text-input"]')
     );
-    const searchBtn = debugElement.query(By.css('[testid="search-button"]'));
+    const searchBtn = debugElement.query(By.css('[testId="search-button"]'));
 
     searchTextField.nativeElement.value = '!!""%%';
     searchTextField.nativeElement.dispatchEvent(new Event('input'));

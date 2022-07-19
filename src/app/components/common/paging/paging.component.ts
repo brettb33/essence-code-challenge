@@ -17,7 +17,7 @@ export class PagingComponent implements OnInit {
     new EventEmitter();
   @Input('pageInfo') pageInfo: PageInfo = new PageInfo(0, 0, 0, 0);
 
-  constructor(public recipeSvc: RecipeService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
