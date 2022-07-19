@@ -121,9 +121,9 @@ describe('SearchPageComponent', () => {
       By.css('[testId="diet-type-select"]')
     );
 
-    dietTypeSelect.nativeElement.value = 'Paleo';
-    dietTypeSelect.nativeElement.textContent = 'Paleo';
-    dietTypeSelect.nativeElement.dispatchEvent(new Event('select'));
+    dietTypeSelect.nativeElement.value =
+      dietTypeSelect.nativeElement.options[4];
+    dietTypeSelect.nativeElement.dispatchEvent(new Event('change'));
 
     //TODO: this one not working currently
     //expect(component.form?.value.dietType).toEqual('Paleo');
@@ -135,9 +135,9 @@ describe('SearchPageComponent', () => {
       By.css('[testId="meal-type-select"]')
     );
 
-    mealTypeSelect.nativeElement.value = 'soup';
-    mealTypeSelect.nativeElement.textContent = 'soup';
-    mealTypeSelect.nativeElement.dispatchEvent(new Event('select'));
+    mealTypeSelect.nativeElement.value =
+      mealTypeSelect.nativeElement.options[1];
+    mealTypeSelect.nativeElement.dispatchEvent(new Event('change'));
 
     //TODO: this one not working currently
     //expect(component.form?.value.mealType).toEqual('soup');
