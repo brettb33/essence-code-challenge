@@ -1,58 +1,67 @@
-<div class="container"></div>
-<div *ngIf="recipeSvc.totalPages > 0" class="container">
-  <div class="fw-light col-md-9" style="display: inline-block">
-    Displaying page {{ recipeSvc.pageNumber + 1 }} of
-    {{ recipeSvc.totalPages }}
-  </div>
-  <div class="col-md-3" style="display: inline-block">
-    <nav aria-label="Recipe search page navigation">
-      <ul class="pagination justify-content-end">
-        <li
-          class="page-item"
-          [ngClass]="recipeSvc.pageNumber === 0 ? 'disabled' : ''"
-        >
-          <a class="page-link" style="cursor: pointer" (click)="search(0)"
-            >First</a
+<div *ngIf="pageInfo.totalPages > 0" class="container">
+  <div class="row justify-content-md-end">
+    <div
+      class="fw-light col-md-2"
+      style="
+        display: inline-block;
+        font-size: 14px;
+        text-align: end;
+        margin-top: 0.35rem !important;
+      "
+    >
+      Displaying page {{ pageInfo.pageNumber + 1 }} of
+      {{ pageInfo.totalPages }}
+    </div>
+    <div class="col-md-2" style="display: inline-block">
+      <nav aria-label="Recipe search page navigation">
+        <ul class="pagination pagination-sm">
+          <li
+            class="page-item"
+            [ngClass]="pageInfo.pageNumber === 0 ? 'disabled' : ''"
           >
-        </li>
-        <li
-          class="page-item"
-          [ngClass]="recipeSvc.pageNumber === 0 ? 'disabled' : ''"
-        >
-          <a
-            class="page-link"
-            style="cursor: pointer"
-            (click)="search(recipeSvc.pageNumber - 1)"
-            >Previous</a
+            <a class="page-link" style="cursor: pointer" (click)="search(0)"
+              >First</a
+            >
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="pageInfo.pageNumber === 0 ? 'disabled' : ''"
           >
-        </li>
-        <li
-          class="page-item"
-          [ngClass]="
-            recipeSvc.pageNumber + 1 === recipeSvc.totalPages ? 'disabled' : ''
-          "
-        >
-          <a
-            class="page-link"
-            style="cursor: pointer"
-            (click)="search(recipeSvc.pageNumber + 1)"
-            >Next</a
+            <a
+              class="page-link"
+              style="cursor: pointer"
+              (click)="search(pageInfo.pageNumber - 1)"
+              >Previous</a
+            >
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="
+              pageInfo.pageNumber + 1 === pageInfo.totalPages ? 'disabled' : ''
+            "
           >
-        </li>
-        <li
-          class="page-item"
-          [ngClass]="
-            recipeSvc.pageNumber + 1 === recipeSvc.totalPages ? 'disabled' : ''
-          "
-        >
-          <a
-            class="page-link"
-            style="cursor: pointer"
-            (click)="search(recipeSvc.totalPages - 1)"
-            >Last</a
+            <a
+              class="page-link"
+              style="cursor: pointer"
+              (click)="search(pageInfo.pageNumber + 1)"
+              >Next</a
+            >
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="
+              pageInfo.pageNumber + 1 === pageInfo.totalPages ? 'disabled' : ''
+            "
           >
-        </li>
-      </ul>
-    </nav>
+            <a
+              class="page-link"
+              style="cursor: pointer"
+              (click)="search(pageInfo.totalPages - 1)"
+              >Last</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>

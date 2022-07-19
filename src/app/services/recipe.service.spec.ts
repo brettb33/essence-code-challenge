@@ -22,8 +22,9 @@ describe('RecipeService', () => {
   let infoPath = '/information';
 
   const recipeItemId = '716342';
+  const pageSize = 15;
 
-  const expectedSearchUrl = `${baseUrl}${complexSearchPath}?query=&apiKey=${token}&number=10&offset=0&addRecipeInformation=true`;
+  const expectedSearchUrl = `${baseUrl}${complexSearchPath}?query=&apiKey=${token}&number=${pageSize}&offset=0&addRecipeInformation=true&diet=null`;
   const expectedGetRecipeUrl = `${baseUrl}/${recipeItemId}${infoPath}?includeNutrition=false&apiKey=${token}`;
 
   const mockRecipeListResponse: RecipeListResponseType = {
@@ -35,7 +36,7 @@ describe('RecipeService', () => {
         title: 'Chicken 65',
         readyInMinutes: 45,
         servings: 4,
-        vegetarian: false,
+        lowFodmap: false,
         healthScore: 80,
       },
       {
@@ -43,7 +44,7 @@ describe('RecipeService', () => {
         title: 'Chicken Suya',
         readyInMinutes: 35,
         servings: 2,
-        vegetarian: false,
+        lowFodmap: false,
         healthScore: 76,
       },
       {
@@ -51,7 +52,7 @@ describe('RecipeService', () => {
         title: 'Chicken Satay',
         readyInMinutes: 50,
         servings: 4,
-        vegetarian: false,
+        lowFodmap: false,
         healthScore: 65,
       },
     ],

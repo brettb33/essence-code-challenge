@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { PageInfo } from '../model/page-info';
 import { RecipeItemDetail } from '../model/recipe-item-detail';
 import { RecipeListItem } from '../model/recipe-list-item';
 import { RecipeListResponseType } from '../model/recipe-list-response-type';
@@ -30,7 +31,7 @@ export class RecipeService {
   private readonly complexSearchPath = '/complexSearch';
   private readonly infoPath = '/information';
 
-  // meal types used to filter search
+  // meal types used to filter a search
   readonly mealTypes: Array<string> = [
     'breakfast',
     'soup',
@@ -40,6 +41,7 @@ export class RecipeService {
     'snack',
   ];
 
+  // diet types used to filter a search
   readonly dietTypes: Array<string> = [
     'Gluten Free',
     'Vegetarian',
@@ -60,12 +62,11 @@ export class RecipeService {
   readonly paramSortOn = 'sort';
   readonly paramSortDir = 'sortDirection';
 
-  // paging info
+  // number of results to display
   readonly pageSize: number = 15;
-  private totalResults: number = 0;
-  pageNumber: number = 0;
-  offset: number = 0;
-  totalPages: number = 0;
+
+  // paging info
+  pageInfo: PageInfo = new PageInfo(0, 0, 0, 0);
 
   // search criteria
   searchCriteria: SearchCriteria | undefined;
@@ -87,9 +88,7 @@ export class RecipeService {
    */
   clearRecipeList() {
     this._searchResults = [];
-    this.totalResults = 0;
-    this.offset = 0;
-    this.totalPages = 0;
+    this.pageInfo = new PageInfo(0, 0, 0, 0);
     this.searchCriteria = undefined;
     this.sortCriteria = undefined;
   }
@@ -107,7 +106,10 @@ export class RecipeService {
     searchCriteria: SearchCriteria,
     sortCriteria?: SortCriteria
   ): Observable<RecipeListResponseType> {
-    this.pageNumber = pageNo;
+    if (pageNo != undefined) {
+      this.pageInfo.pageNumber = pageNo;
+    }
+
     this.searchCriteria = searchCriteria;
     this.sortCriteria = sortCriteria;
 
@@ -118,9 +120,11 @@ export class RecipeService {
       .pipe(
         map((response: RecipeListResponseType) => {
           this._searchResults = response.results;
-          this.totalResults = response.totalResults;
-          this.totalPages = Math.ceil(this.totalResults / this.pageSize);
-          this.offset = response.offset;
+          this.pageInfo.totalResults = response.totalResults;
+          this.pageInfo.totalPages = Math.ceil(
+            this.pageInfo.totalResults / this.pageSize
+          );
+          this.pageInfo.offset = response.offset;
           return response;
         })
       )
@@ -139,7 +143,10 @@ export class RecipeService {
       params = params.set(this.paramQuery, this.searchCriteria.searchText);
       params = params.set(this.paramApiKey, this.apiKey);
       params = params.set(this.paramPageSize, this.pageSize);
-      params = params.set(this.paramOffset, this.pageNumber * this.pageSize);
+      params = params.set(
+        this.paramOffset,
+        this.pageInfo.pageNumber * this.pageSize
+      );
       params = params.set(this.paramAddRecipeInfo, true);
 
       // add the meal type filter if set

@@ -19,7 +19,7 @@ const mockRecipeListResponse: RecipeListResponseType = {
       title: 'Chicken 65',
       readyInMinutes: 45,
       servings: 4,
-      vegetarian: false,
+      lowFodmap: false,
       healthScore: 80,
     },
     {
@@ -27,7 +27,7 @@ const mockRecipeListResponse: RecipeListResponseType = {
       title: 'Chicken Suya',
       readyInMinutes: 35,
       servings: 2,
-      vegetarian: false,
+      lowFodmap: false,
       healthScore: 76,
     },
     {
@@ -35,7 +35,7 @@ const mockRecipeListResponse: RecipeListResponseType = {
       title: 'Chicken Satay',
       readyInMinutes: 50,
       servings: 4,
-      vegetarian: false,
+      lowFodmap: false,
       healthScore: 65,
     },
   ],

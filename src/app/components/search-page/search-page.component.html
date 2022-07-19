@@ -14,8 +14,8 @@
   <div class="card mt-4 border-0">
     <div class="card-body">
       <div *ngIf="form" class="container mb-4">
-        <form [formGroup]="form">
-          <div class="row mt-5">
+        <form [formGroup]="form" (keyup.enter)="searchRecipes(0)">
+          <div class="row mt-5 justify-content-center">
             <div class="col-md-auto">
               <label class="col-form-label col-form-label-sm"
                 ><b>Search:</b>
@@ -99,7 +99,10 @@
       <ng-container *ngIf="!loading">
         <div class="container">
           <div class="row mt-5">
-            <app-paging (parentSearch)="searchRecipes($event)"></app-paging>
+            <app-paging
+              (parentSearch)="searchRecipes($event)"
+              [pageInfo]="recipeSvc.pageInfo"
+            ></app-paging>
           </div>
         </div>
 
@@ -123,7 +126,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let recipe of recipeSvc.recipeList; let i = index">
-              <th scope="row">{{ i + 1 + recipeSvc.offset }}</th>
+              <th scope="row">{{ i + 1 + recipeSvc.pageInfo.offset }}</th>
               <td>{{ recipe.title }}</td>
               <td class="text-center">{{ recipe.healthScore }}</td>
               <td class="text-center">{{ recipe.readyInMinutes }}</td>
@@ -141,7 +144,7 @@
                 >
               </td>
             </tr>
-            <tr *ngIf="recipeSvc.recipeList.length === 0">
+            <tr *ngIf="recipeSvc?.pageInfo?.totalResults == 0">
               <td class="text-center" colspan="7">No results to display</td>
             </tr>
           </tbody>
