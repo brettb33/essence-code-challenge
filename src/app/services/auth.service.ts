@@ -5,6 +5,8 @@ import { User } from '../model/user';
 
 /**
  * Authentication Service for gaining access
+ *
+ * @author Brett Batey
  */
 @Injectable({
   providedIn: 'root',
@@ -54,6 +56,10 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('user');
+    getAuth()
+      .signOut()
+      .then(() => {
+        localStorage.removeItem('user');
+      });
   }
 }

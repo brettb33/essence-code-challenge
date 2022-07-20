@@ -18,8 +18,7 @@
       "type": "firefox",
       "request": "launch",
       "url": "http://localhost:4200/",
-      "firefoxExecutable": "C:/Program Files/Mozilla Firefox45/firefox.exe",
-      "profile": "default-1506348047037"
+      "webRoot": "${workspaceFolder}"
     },
     {
       "name": "Attach Karma Chrome",
