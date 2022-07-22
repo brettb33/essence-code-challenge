@@ -117,10 +117,34 @@
                   (click)="sortOn(sortType.HEALTH_SCORE)"
                   >Health Score (%)</a
                 >
+                <ng-container
+                  *ngIf="sortCriteria?.sortOn === sortType.HEALTH_SCORE"
+                >
+                  {{
+                    sortCriteria?.sortDirection === sortDirection.ASCENDING
+                      ? "&#x25B4;"
+                      : "&#x25BE;"
+                  }}
+                </ng-container>
+              </th>
+              <th scope="col" class="text-center">
+                <a
+                  style="cursor: pointer; text-decoration: underline"
+                  (click)="sortOn(sortType.CALORIES)"
+                  >Calories</a
+                >
+                <ng-container
+                  *ngIf="sortCriteria?.sortOn === sortType.CALORIES"
+                >
+                  {{
+                    sortCriteria?.sortDirection === sortDirection.ASCENDING
+                      ? "&#x25B4;"
+                      : "&#x25BE;"
+                  }}
+                </ng-container>
               </th>
               <th scope="col" class="text-center">Ready In Minutes</th>
               <th scope="col" class="text-center">Servings</th>
-              <th scope="col" class="text-center">Low FODMAP</th>
               <th scope="col" class="text-right">&nbsp;</th>
             </tr>
           </thead>
@@ -129,9 +153,13 @@
               <th scope="row">{{ i + 1 + recipeSvc.pageInfo.offset }}</th>
               <td>{{ recipe.title }}</td>
               <td class="text-center">{{ recipe.healthScore }}</td>
+              <td class="text-center">
+                {{ math.round(recipe.nutrition.nutrients[0].amount) }}
+              </td>
               <td class="text-center">{{ recipe.readyInMinutes }}</td>
-              <td class="text-center">{{ recipe.servings }}</td>
-              <td class="text-center">{{ recipe.lowFodmap ? "Yes" : "No" }}</td>
+              <td class="text-center">
+                {{ recipe.servings }}
+              </td>
               <td class="text-right">
                 <a
                   style="

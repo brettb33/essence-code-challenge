@@ -28,6 +28,7 @@ import { RecipeService } from 'src/app/services/recipe.service';
 export class SearchPageComponent implements OnInit, OnDestroy {
   private subscriptions: Array<Subscription> = [];
   loading: boolean = false;
+  math = Math;
 
   // form info
   form: FormGroup | undefined;
@@ -37,7 +38,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   // sorting
   sortType = SortType;
-  private sortCriteria: SortCriteria | undefined;
+  sortDirection = SortDirection;
+  sortCriteria: SortCriteria | undefined;
 
   constructor(
     public recipeSvc: RecipeService,
@@ -49,6 +51,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
     this.pushDataToForm();
+    this.sortCriteria = this.recipeSvc.sortCriteria;
   }
 
   ngOnDestroy(): void {
@@ -89,8 +92,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   /**
    * Sorts on a particular table column
    * (currently just Health Score)
-   * TODO: This needs refining so it can accomodate other
-   * columns and their current sort direction
+   *
    * @param sortType
    */
   sortOn(sortType: SortType) {

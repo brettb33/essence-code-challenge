@@ -6,6 +6,11 @@ export interface RecipeListItem {
   title: string;
   readyInMinutes: number;
   servings: number;
-  lowFodmap: boolean;
   healthScore: number;
+  nutrition: {
+    nutrients: Array<{
+      name: string;
+      amount: number;
+    }>;
+  };
 }

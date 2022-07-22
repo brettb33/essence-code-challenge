@@ -57,6 +57,7 @@ export class RecipeService {
   readonly paramPageSize = 'number';
   readonly paramOffset = 'offset';
   readonly paramAddRecipeInfo = 'addRecipeInformation';
+  readonly paramAddRecipeNutrition = 'addRecipeNutrition';
   readonly paramMealType = 'type';
   readonly paramDietType = 'diet';
   readonly paramSortOn = 'sort';
@@ -72,7 +73,7 @@ export class RecipeService {
   searchCriteria: SearchCriteria | undefined;
 
   // sort criteria
-  private sortCriteria: SortCriteria | undefined;
+  sortCriteria: SortCriteria | undefined;
 
   private _searchResults: Array<RecipeListItem> = [];
 
@@ -148,6 +149,7 @@ export class RecipeService {
         this.pageInfo.pageNumber * this.pageSize
       );
       params = params.set(this.paramAddRecipeInfo, true);
+      params = params.set(this.paramAddRecipeNutrition, true);
 
       // add the meal type filter if set
       if (this.searchCriteria.mealType) {

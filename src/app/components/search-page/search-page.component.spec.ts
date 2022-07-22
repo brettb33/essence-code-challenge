@@ -19,28 +19,59 @@ const mockRecipeListResponse: RecipeListResponseType = {
       title: 'Chicken 65',
       readyInMinutes: 45,
       servings: 4,
-      lowFodmap: false,
       healthScore: 80,
+      nutrition: {
+        nutrients: [
+          {
+            name: 'Calories',
+            amount: 254,
+          },
+        ],
+      },
     },
     {
       id: '716342',
       title: 'Chicken Suya',
       readyInMinutes: 35,
       servings: 2,
-      lowFodmap: false,
       healthScore: 76,
+      nutrition: {
+        nutrients: [
+          {
+            name: 'Calories',
+            amount: 379,
+          },
+        ],
+      },
     },
     {
       id: '638308',
       title: 'Chicken Satay',
       readyInMinutes: 50,
       servings: 4,
-      lowFodmap: false,
       healthScore: 65,
+      nutrition: {
+        nutrients: [
+          {
+            name: 'Calories',
+            amount: 460,
+          },
+        ],
+      },
     },
   ],
   totalResults: 3,
 };
+
+// diet types used to filter a search
+const _dietTypes: Array<string> = [
+  'Gluten Free',
+  'Vegetarian',
+  'Ketogenic',
+  'Vegan',
+  'Paleo',
+  'Pescetarian',
+];
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -122,7 +153,7 @@ describe('SearchPageComponent', () => {
     );
 
     dietTypeSelect.nativeElement.value =
-      dietTypeSelect.nativeElement.options[4];
+      dietTypeSelect.nativeElement.options[5]?.value;
     dietTypeSelect.nativeElement.dispatchEvent(new Event('change'));
 
     //TODO: this one not working currently
@@ -136,8 +167,7 @@ describe('SearchPageComponent', () => {
     );
 
     mealTypeSelect.nativeElement.value =
-      mealTypeSelect.nativeElement.options[1];
-    mealTypeSelect.nativeElement.dispatchEvent(new Event('change'));
+      mealTypeSelect.nativeElement.dispatchEvent(new Event('change'));
 
     //TODO: this one not working currently
     //expect(component.form?.value.mealType).toEqual('soup');
