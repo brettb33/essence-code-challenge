@@ -64,13 +64,23 @@ const mockRecipeListResponse: RecipeListResponseType = {
 };
 
 // diet types used to filter a search
-const _dietTypes: Array<string> = [
+const mockDietTypes: Array<string> = [
   'Gluten Free',
   'Vegetarian',
   'Ketogenic',
   'Vegan',
   'Paleo',
   'Pescetarian',
+];
+
+// meal types used to filter a search
+const mockMealTypes: Array<string> = [
+  'breakfast',
+  'soup',
+  'main course',
+  'dessert',
+  'drink',
+  'snack',
 ];
 
 describe('SearchPageComponent', () => {
@@ -80,9 +90,16 @@ describe('SearchPageComponent', () => {
   let routerSpy = { navigate: jasmine.createSpy('navigate') };
 
   beforeEach(async () => {
-    mockRecipeSvc = jasmine.createSpyObj<RecipeService>('RecipeService', {
-      searchRecipes: of(mockRecipeListResponse),
-    });
+    mockRecipeSvc = jasmine.createSpyObj<RecipeService>(
+      'RecipeService',
+      {
+        searchRecipes: of(mockRecipeListResponse),
+      },
+      {
+        dietTypes: mockDietTypes,
+        mealTypes: mockMealTypes,
+      }
+    );
 
     await TestBed.configureTestingModule({
       imports: [
@@ -152,12 +169,12 @@ describe('SearchPageComponent', () => {
       By.css('[testId="diet-type-select"]')
     );
 
+    // set the select options value to 'Paleo'
     dietTypeSelect.nativeElement.value =
       dietTypeSelect.nativeElement.options[5]?.value;
     dietTypeSelect.nativeElement.dispatchEvent(new Event('change'));
 
-    //TODO: this one not working currently
-    //expect(component.form?.value.dietType).toEqual('Paleo');
+    expect(component.form?.value.dietType).toEqual('Paleo');
   });
 
   it('should get the meal type from the meal type selection', () => {
@@ -167,10 +184,10 @@ describe('SearchPageComponent', () => {
     );
 
     mealTypeSelect.nativeElement.value =
-      mealTypeSelect.nativeElement.dispatchEvent(new Event('change'));
+      mealTypeSelect.nativeElement.options[2].value;
+    mealTypeSelect.nativeElement.dispatchEvent(new Event('change'));
 
-    //TODO: this one not working currently
-    //expect(component.form?.value.mealType).toEqual('soup');
+    expect(component.form?.value.mealType).toEqual('soup');
   });
 
   it('should disable the search button when non-alphabetical characters are entered', () => {
