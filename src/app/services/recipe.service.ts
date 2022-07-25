@@ -156,11 +156,10 @@ export class RecipeService {
         params = params.set(this.paramMealType, this.searchCriteria.mealType);
       }
 
-      // add the diet type filter (if its not set, set it to null as this seems to correct the API searching!!)
-      params = params.set(
-        this.paramDietType,
-        this.searchCriteria.dietType ?? 'null'
-      );
+      // add the diet type filter if set
+      if (this.searchCriteria.dietType) {
+        params = params.set(this.paramDietType, this.searchCriteria.dietType);
+      }
 
       // add sorting if set
       if (this.sortCriteria) {
