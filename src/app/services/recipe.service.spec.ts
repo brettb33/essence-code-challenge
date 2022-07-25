@@ -24,7 +24,7 @@ describe('RecipeService', () => {
   const recipeItemId = '716342';
   const pageSize = 15;
 
-  const expectedSearchUrl = `${baseUrl}${complexSearchPath}?query=&apiKey=${token}&number=${pageSize}&offset=0&addRecipeInformation=true&addRecipeNutrition=true&diet=null`;
+  const expectedSearchUrl = `${baseUrl}${complexSearchPath}?query=&apiKey=${token}&number=${pageSize}&offset=0&addRecipeInformation=true&addRecipeNutrition=true`;
   const expectedGetRecipeUrl = `${baseUrl}/${recipeItemId}${infoPath}?includeNutrition=false&apiKey=${token}`;
 
   const mockRecipeListResponse: RecipeListResponseType = {
