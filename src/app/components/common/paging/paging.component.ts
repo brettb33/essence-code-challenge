@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageInfo } from 'src/app/model/page-info';
-import { RecipeService } from 'src/app/services/recipe.service';
 
 /**
  * Generic paging component that takes a {@link PageInfo} object
@@ -12,14 +11,10 @@ import { RecipeService } from 'src/app/services/recipe.service';
   templateUrl: './paging.component.html',
   styleUrls: ['./paging.component.css'],
 })
-export class PagingComponent implements OnInit {
+export class PagingComponent {
   @Output('parentSearch') parentSearch: EventEmitter<number> =
     new EventEmitter();
   @Input('pageInfo') pageInfo: PageInfo = new PageInfo(0, 0, 0, 0);
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   search(pageNumber: number) {
     this.parentSearch.emit(pageNumber);
