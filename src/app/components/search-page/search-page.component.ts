@@ -7,12 +7,12 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SearchCriteria } from 'src/app/model/search-criteria';
-import { SortCriteria } from 'src/app/model/sort-criteria';
-import { SortDirection } from 'src/app/model/sort-direction';
-import { SortType } from 'src/app/model/sort-type';
+import { SearchCriteria } from 'src/app/shared/models/search-criteria';
+import { SortCriteria } from 'src/app/shared/models/sort-criteria';
+import { SortDirection } from 'src/app/shared/enums/sort-direction';
 import { AuthService } from 'src/app/services/auth.service';
 import { RecipeService } from 'src/app/services/recipe.service';
+import { SortType } from 'src/app/shared/enums/sort-type';
 
 /**
  * Component to search for recipes and display

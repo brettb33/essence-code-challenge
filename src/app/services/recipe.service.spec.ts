@@ -4,9 +4,9 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RecipeItemDetail } from '../model/recipe-item-detail';
-import { SearchCriteria } from '../model/search-criteria';
-import { RecipeListResponseType } from '../model/recipe-list-response-type';
+import { RecipeItemDetail } from '../shared/models/recipe-item-detail';
+import { SearchCriteria } from '../shared/models/search-criteria';
+import { RecipeListResponseType } from '../shared/models/recipe-list-response-type';
 
 import { RecipeService } from './recipe.service';
 

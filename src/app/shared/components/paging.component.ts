@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageInfo } from 'src/app/model/page-info';
+import { PageInfo } from 'src/app/shared/models/page-info';
 
 /**
  * Generic paging component that takes a {@link PageInfo} object

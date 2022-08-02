@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { RecipeItemDetail } from 'src/app/model/recipe-item-detail';
+import { RecipeItemDetail } from 'src/app/shared/models/recipe-item-detail';
 import { RecipeService } from 'src/app/services/recipe.service';
 
 import { RecipeItemComponent } from './recipe-item.component';

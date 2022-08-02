@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
-import { User } from '../model/user';
+import { User } from '../shared/models/user';
 
 /**
  * Authentication Service for gaining access

@@ -5,10 +5,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { of } from 'rxjs';
-import { RecipeListResponseType } from 'src/app/model/recipe-list-response-type';
+import { RecipeListResponseType } from 'src/app/shared/models/recipe-list-response-type';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { SearchCriteria } from 'src/app/model/search-criteria';
+import { SearchCriteria } from 'src/app/shared/models/search-criteria';
 
 const mockRecipeListResponse: RecipeListResponseType = {
   offset: 10,

@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PageInfo } from 'src/app/model/page-info';
+import { PageInfo } from 'src/app/shared/models/page-info';
 
 import { PagingComponent } from './paging.component';
 

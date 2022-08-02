@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { RecipeItemComponent } from './components/recipe-item/recipe-item.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PagingComponent } from './components/common/paging/paging.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { PagingComponent } from './shared/components/paging.component';
 
 @NgModule({
   declarations: [

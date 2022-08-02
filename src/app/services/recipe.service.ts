@@ -6,12 +6,12 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { PageInfo } from '../model/page-info';
-import { RecipeItemDetail } from '../model/recipe-item-detail';
-import { RecipeListItem } from '../model/recipe-list-item';
-import { RecipeListResponseType } from '../model/recipe-list-response-type';
-import { SearchCriteria } from '../model/search-criteria';
-import { SortCriteria } from '../model/sort-criteria';
+import { PageInfo } from '../shared/models/page-info';
+import { RecipeItemDetail } from '../shared/models/recipe-item-detail';
+import { RecipeListItem } from '../shared/models/recipe-list-item';
+import { RecipeListResponseType } from '../shared/models/recipe-list-response-type';
+import { SearchCriteria } from '../shared/models/search-criteria';
+import { SortCriteria } from '../shared/models/sort-criteria';
 
 /**
  * Service to interact with the Spoonacular public API
