@@ -91,7 +91,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   /**
    * Sorts on a particular table column
-   * (currently just Health Score)
+   * (currently just Health Score and Calories)
    *
    * @param sortType
    */
