@@ -12,9 +12,8 @@ import { PageInfo } from 'src/app/shared/models/page-info';
   styleUrls: ['./paging.component.css'],
 })
 export class PagingComponent {
-  @Output('parentSearch') parentSearch: EventEmitter<number> =
-    new EventEmitter();
-  @Input('pageInfo') pageInfo: PageInfo = new PageInfo(0, 0, 0, 0);
+  @Output() parentSearch: EventEmitter<number> = new EventEmitter();
+  @Input() pageInfo: PageInfo = new PageInfo(0, 0, 0, 0);
 
   search(pageNumber: number) {
     this.parentSearch.emit(pageNumber);
