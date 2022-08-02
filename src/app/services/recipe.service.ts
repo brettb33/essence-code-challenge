@@ -107,9 +107,7 @@ export class RecipeService {
     searchCriteria: SearchCriteria,
     sortCriteria?: SortCriteria
   ): Observable<RecipeListResponseType> {
-    if (pageNo != undefined) {
-      this.pageInfo.pageNumber = pageNo;
-    }
+    this.pageInfo.pageNumber = pageNo ?? 0;
 
     this.searchCriteria = searchCriteria;
     this.sortCriteria = sortCriteria;
