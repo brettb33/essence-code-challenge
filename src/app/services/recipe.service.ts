@@ -24,7 +24,7 @@ import { SortCriteria } from '../shared/models/sort-criteria';
   providedIn: 'root',
 })
 export class RecipeService {
-  private readonly url: string = 'https://api.spoonacular.com/recipes';
+  private readonly baseUrl: string = 'https://api.spoonacular.com/recipes';
   private readonly apiKey = '66f014cb70f940b8ac05ea32a4ffa8cb';
 
   // URL paths for a particular search call
@@ -113,7 +113,7 @@ export class RecipeService {
     this.sortCriteria = sortCriteria;
 
     return this.httpClient
-      .get<RecipeListResponseType>(this.url + this.complexSearchPath, {
+      .get<RecipeListResponseType>(this.baseUrl + this.complexSearchPath, {
         params: this.getSearchParams(),
       })
       .pipe(
@@ -179,7 +179,7 @@ export class RecipeService {
     params = params.set('includeNutrition', false);
     params = params.set('apiKey', this.apiKey);
     return this.httpClient
-      .get<RecipeItemDetail>(this.url + '/' + recipeId + this.infoPath, {
+      .get<RecipeItemDetail>(this.baseUrl + '/' + recipeId + this.infoPath, {
         params: params,
       })
       .pipe(
@@ -188,6 +188,15 @@ export class RecipeService {
         })
       )
       .pipe(catchError(this.handleError));
+  }
+
+  /**
+   * Gets the nutrition image URL for a particular recipe
+   * @param recipeId the id of the recipe
+   * @returns the nutrition image URL for a particular recipe
+   */
+  getNutritionImageUrl(recipeId: string): string {
+    return `${this.baseUrl}/${recipeId}/nutritionWidget.png?apiKey=${this.apiKey}`;
   }
 
   /**

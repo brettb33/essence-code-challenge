@@ -5,7 +5,8 @@ import { RecipeItemDetail } from 'src/app/shared/models/recipe-item-detail';
 import { RecipeService } from 'src/app/services/recipe.service';
 
 /**
- * Component to view a Recipe
+ * Component to view Recipe details
+ * and corresponding nutritional information.
  *
  * @author Brett Batey
  */
@@ -30,7 +31,7 @@ export class RecipeItemComponent implements OnInit {
       if (params['id']) {
         const recipeId = params['id'];
         this.loadRecipe(recipeId);
-        this.nutritionImagePath = `https://api.spoonacular.com/recipes/${recipeId}/nutritionWidget.png?apiKey=66f014cb70f940b8ac05ea32a4ffa8cb`;
+        this.nutritionImagePath = this.recipeSvc.getNutritionImageUrl(recipeId);
       }
     });
   }
